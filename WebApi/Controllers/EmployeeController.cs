@@ -26,10 +26,10 @@ namespace WebApi.Controllers
             return _mapper.Map<IEnumerable<EmployeeDto>>(items);
         }
 
-        // GET api/employee/{employeeCode}
-        public EmployeeDto Get(string employeeCode)
+        // GET api/employee/{id}
+        public EmployeeDto Get(string id)
         {
-            var item = _employeeService.GetEmployeeByCode(employeeCode);
+            var item = _employeeService.GetEmployeeByCode(id);
             return _mapper.Map<EmployeeDto>(item);
         }
 
@@ -54,10 +54,10 @@ namespace WebApi.Controllers
             }
         }
 
-        // PUT api/employee/{employeeCode}
-        public IHttpActionResult Put(string employeeCode, [FromBody] EmployeeDto employeeDto)
+        // PUT api/employee/{id}
+        public IHttpActionResult Put(string id, [FromBody] EmployeeDto employeeDto)
         {
-            if (employeeDto == null || employeeCode != employeeDto.EmployeeCode)
+            if (employeeDto == null || id != employeeDto.EmployeeCode)
             {
                 return BadRequest("Invalid data.");
             }
@@ -75,10 +75,10 @@ namespace WebApi.Controllers
             }
         }
 
-        // DELETE api/employee/{employeeCode}
-        public IHttpActionResult Delete(string employeeCode)
+        // DELETE api/employee/{id}
+        public IHttpActionResult Delete(string id)
         {
-            var result = _employeeService.DeleteEmployee(employeeCode);
+            var result = _employeeService.DeleteEmployee(id);
 
             if (result)
             {

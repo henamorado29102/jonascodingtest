@@ -33,15 +33,14 @@ namespace WebApi.Controllers
             var items = await _companyService.GetAllCompaniesAsync();
             return _mapper.Map<IEnumerable<CompanyDto>>(items);
         }
-
         // GET api/<controller>/5
-        public async Task<CompanyDto> Get(string companyCode)
+        public async Task<CompanyDto> Get(string id)
         {
-            _logger.LogInformation($"Get the companies {companyCode}.");
-            var item = await _companyService.GetCompanyByCodeAsync(companyCode);
+            _logger.LogInformation($"Get the companies {id}.");
+            var item = await _companyService.GetCompanyByCodeAsync(id);
             if (item == null)
             {
-                throw new HttpResponseException(System.Net.HttpStatusCode.NotFound);
+                return null;
             }
 
             return _mapper.Map<CompanyDto>(item);
@@ -79,9 +78,9 @@ namespace WebApi.Controllers
         }
 
         // PUT api/<controller>/5
-        public async Task<IHttpActionResult> Put(string companyCode, [FromBody] CompanyDto companyDto)
+        public async Task<IHttpActionResult> Put(string id, [FromBody] CompanyDto companyDto)
         {
-            if (companyDto == null || companyCode != companyDto.CompanyCode)
+            if (companyDto == null || id != companyDto.CompanyCode)
             {
                 return BadRequest("Invalid data.");
             }
@@ -100,9 +99,9 @@ namespace WebApi.Controllers
         }
 
         // DELETE api/<controller>/5
-        public async Task<IHttpActionResult> Delete(string companyCode)
+        public async Task<IHttpActionResult> Delete(string id)
         {
-            var result = await _companyService.DeleteCompanyAsync(companyCode);
+            var result = await _companyService.DeleteCompanyAsync(id);
 
             if (result)
             {
